@@ -80,19 +80,24 @@ def generate_certificate_pdf(student_name, institution, course, graduation_date,
         spaceAfter=4, alignment=TA_CENTER
     )
 
-    # Certificate content
-    elements.append(Spacer(1, 0.3*inch))
-    elements.append(Paragraph("VERITAS", title_style))
-    elements.append(Paragraph("Blockchain-Verified Academic Credential", subtitle_style))
+    elements = []
+
+    # Header — Institution name
+    elements.append(Spacer(1, 0.4*inch))
+    elements.append(Paragraph(institution.upper(), title_style))
+    elements.append(Paragraph("Office of the Registrar", subtitle_style))
     elements.append(Spacer(1, 0.3*inch))
 
-    # Decorative line
+    # Top decorative line
     elements.append(Table(
         [['']], colWidths=[6*inch],
         style=TableStyle([('LINEABOVE', (0,0), (-1,-1), 2, colors.HexColor('#185FA5'))])
     ))
     elements.append(Spacer(1, 0.3*inch))
 
+    # Certificate body
+    elements.append(Paragraph("Certificate of Completion", subtitle_style))
+    elements.append(Spacer(1, 0.2*inch))
     elements.append(Paragraph("This is to certify that", body_style))
     elements.append(Spacer(1, 0.1*inch))
     elements.append(Paragraph(student_name, name_style))
@@ -106,16 +111,15 @@ def generate_certificate_pdf(student_name, institution, course, graduation_date,
     elements.append(Paragraph(f"Graduation Date: {graduation_date}", body_style))
     elements.append(Spacer(1, 0.3*inch))
 
-    # Decorative line
+    # Bottom decorative line
     elements.append(Table(
         [['']], colWidths=[6*inch],
         style=TableStyle([('LINEABOVE', (0,0), (-1,-1), 2, colors.HexColor('#185FA5'))])
     ))
     elements.append(Spacer(1, 0.2*inch))
 
-    # Certificate ID
+    # Certificate ID and blockchain info
     elements.append(Paragraph(f"Certificate ID: {cert_id}", small_style))
-    elements.append(Paragraph("Verified on Ethereum Blockchain", small_style))
 
     # QR Code
     qr_data = f"Certificate ID: {cert_id} | Student: {student_name} | Course: {course}"
